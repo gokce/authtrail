@@ -19,7 +19,6 @@ module AuthTrail
       identity: identity,
       success: success,
       failure_reason: failure_reason,
-      user: user,
       context: "#{request.params[:controller]}##{request.params[:action]}",
       ip: request.remote_ip,
       user_agent: request.user_agent,
