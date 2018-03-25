@@ -7,9 +7,10 @@ require "auth_trail/version"
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method
+    attr_accessor :exclude_method, :geocode, :track_method, :user_model
   end
   self.geocode = true
+  self.user_model = "user"
 
   def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
     info = {
@@ -24,6 +25,7 @@ module AuthTrail
       user_agent: request.user_agent,
       referrer: request.referrer
     }
+    info[AuthTrail.user_model] = user
 
     # if exclude_method throws an exception, default to not excluding
     exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(info) }
